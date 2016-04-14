@@ -1,0 +1,10 @@
+<div class="list" ng-controller='UsersController'>
+	<div>{{success.msg}}</div>
+	<a ng-href="#/users/add" class="button">Add User</a>
+	<ul>
+			<li ng-repeat="user in users">
+				<a ng-href="#/users/{{ user._id }}">{{user.name}}, {{user.email}}, {{user._id}} </a>
+				<a ng-click="deleteUser(user)"><i class="fa fa-trash" aria-hidden="true" ></i></a>
+			</li>
+	</ul>
+</div>

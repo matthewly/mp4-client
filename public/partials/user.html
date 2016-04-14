@@ -1,0 +1,31 @@
+<div class="list" ng-controller='UserController'>    
+  <div>{{success.msg}}</div>
+
+  <a ng-href="#/users/edit/{{ user._id }}">
+  	<i class="fa fa-pencil-square-o fa-4x" aria-hidden="true"></i>
+  </a>
+
+  <ul>
+  	<li>User Email: {{user.email}}</li>
+  	<li>User Name: {{user.name}}</li>
+  	<ul>
+  		<u>Pending Tasks: </u>
+  		<li ng-repeat="task in tasks">{{task.name}}
+  			<label>Complete:
+    			<input type="checkbox" ng-click="complete(task._id)" >
+  			</label>
+  		</li>
+  	</ul>
+
+  	<br><br>
+  	<button class="button" ng-click="load_complete()">Load complete</button>
+  	<ul>
+  		<u>Completed Tasks: </u>
+  		<li ng-repeat="task in tasks_complete">{{task.name}}</li>
+  	</ul>
+  </ul>
+
+  
+
+  
+</div>

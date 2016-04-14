@@ -1,0 +1,17 @@
+<div ng-controller="TaskEditController">
+	<form validate class="simple-form" ng-submit="submit()">
+      Name: <input type="text" ng-model="Task.name" required/><br />
+      Description: <input type="text" ng-model="Task.description" /><br />
+      Deadline: <datepicker>
+            <input ng-model="Task.deadline" type="text" required/>
+          </datepicker><br />
+
+    <label for="assignedUserName"> Assign to: </label><br>
+      <select name="assignedUserName" ng-model="Task.assignedUserName">
+        <option value="{{user.name}}" ng-repeat="user in users">{{user.name}}</option>
+      </select>
+      
+      <input type="submit" value="Save" />
+    </form>
+  	<span>{{status}}</span>
+</div>

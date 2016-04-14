@@ -1,0 +1,9 @@
+<div ng-controller="UserEditController">
+  <form validate name="userForm" class="simple-form" ng-submit="submit()">
+  	  Name: <input type="text" name="name" ng-model="User.name" required/><br />
+  	  E-mail: <input type="email" ng-model="User.email" required/><br />
+  	  
+  	  <input type="submit" value="Save" />
+  	</form>
+    <span>{{status}}</span>
+</div>

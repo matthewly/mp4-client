@@ -1,0 +1,41 @@
+<div class="list" ng-controller='TasksController'>
+
+  <div>{{success.msg}}</div>
+  
+  <a ng-href="#/tasks/add" class="button">Add Task</a>
+
+  <label class="user_input_container"><u>Sort by:</u>
+      <select ng-model="sort_by">
+          <option value="name" ng-click="sort()">name</option>
+          <option value="assignedUserName" ng-click="sort()">assignedUserName</option>
+          <option value="dateCreated" ng-click="sort()">dateCreated</option>
+          <option value="deadline" ng-click="sort()">deadline</option>
+      </select>
+
+      <label>
+        <input type="radio" ng-model="order_by" value="1" ng-click="sort()">
+          Ascending
+        </label><br/>
+        <label>
+        <input type="radio" ng-model="order_by" value="-1" ng-click="sort()">
+          Descending
+        </label>
+      </label>
+  <fieldset class="large-12 columns">
+    <u>Task type:</u>
+    <input type="radio" ng-model="task_type" ng-click="update()" value="all"><label for="all">All</label>
+    <input type="radio" ng-model="task_type" ng-click="update()" value="completed" ><label for="completed">Completed</label>
+    <input type="radio" ng-model="task_type" ng-click="update()" value="pending" ><label for="pending">Pending</label>
+  </fieldset>
+
+  <ul>
+      <li ng-repeat="task in tasks">
+      	<a ng-href="#/tasks/{{ task._id }}">Task Name: {{task.name}}, Task AssignedUserName: {{task.assignedUserName}}</a>
+      	<a ng-click="deleteTask(task)"><i class="fa fa-trash" aria-hidden="true" ></i></a>
+      </li>
+  </ul>
+
+  <button class="button" ng-click="prevPage()" ng-disabled="prev_disabled">Prev</button> {{page}}
+  <button class="button" ng-click="nextPage()" ng-disabled="next_disabled">Next</button>
+
+</div>

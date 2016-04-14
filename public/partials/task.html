@@ -1,0 +1,21 @@
+<div class="list" ng-controller='TaskController'>   
+  <ul>
+    <li>Name: {{task.name}}</li>
+    <li>ID: {{task._id}}</li>
+    <li>Deadline: {{task.deadline}}</li>
+    <li>Description: {{task.description}}</li>
+    <li>Assigned User Name: {{task.assignedUserName}}</li>
+    <li>Assigned User ID: {{task.assignedUser}}</li>
+    <li>Completed: {{task.completed}}</li>
+  </ul>
+
+  <a ng-href="#/tasks/edit/{{ task._id }}">
+  	<i class="fa fa-pencil-square-o fa-4x" aria-hidden="true"></i>
+  </a>
+
+  <label>Check this to make incomplete: 
+      <input type="checkbox" ng-click="incomplete(task._id)" >
+  </label>
+
+  {{success.msg}}
+</div>
