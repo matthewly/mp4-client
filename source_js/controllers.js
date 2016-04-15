@@ -322,7 +322,7 @@ mp4Controllers.controller('TaskEditController', ['$scope', '$http', 'Task', 'Use
         User.editComplete(function(data) {
           console.log('User edit complete!');
           
-          $window.location.href = '/#/tasks/'+$scope.Task._id;
+          $window.location.href = './#/tasks/'+$scope.Task._id;
         }, userObj);
         AlertService.setSuccess({ show: true, msg: 'Task has been updated successfully.' });
       }, $scope.Task);
@@ -333,7 +333,7 @@ mp4Controllers.controller('TaskEditController', ['$scope', '$http', 'Task', 'Use
         console.log('Task edit complete!');
         
         AlertService.setSuccess({ show: true, msg: 'Task has been updated successfully.' });
-        $window.location.href = '/#/tasks/'+$scope.Task._id;
+        $window.location.href = './#/tasks/'+$scope.Task._id;
 
       }, $scope.Task);
     
