@@ -27,7 +27,9 @@ mp4Controllers.controller('UserController', ['$scope', '$http', 'User', 'Tasks',
   
          console.log(JSON.stringify($scope.user));
   
-         User.editComplete(function(data) {
+         User.editComplete(function(data, successMsg) {
+            console.log(successMsg);
+            $scope.status = successMsg;
             AlertService.setSuccess({ show: true, msg: 'Task has been updated successfully.' });
             
          }, $scope.user);
@@ -133,8 +135,9 @@ mp4Controllers.controller('TaskController', ['$scope', '$http', 'Task', 'AlertSe
     $scope.task.completed = false;
 
       // console.log(JSON.stringify(taskObj));
-      Task.editComplete(function(data) {
-  
+      Task.editComplete(function(data, successMsg) {
+        console.log(successMsg);
+            $scope.status = successMsg;
   
             AlertService.setSuccess({ show: true, msg: 'Task has been updated successfully.' });
      
