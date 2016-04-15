@@ -124,7 +124,7 @@ mp4Services.factory('Task', function($http, $window, $routeParams){
             console.log('taskID: '+taskID);
             return $http.put(baseUrl+'/api/tasks/'+taskID, taskData, {headers: {"Content-Type": "application/json;charset=utf-8","Accept": "application/json, text/plain, */*"}}).success( function(data) {
                 var successMsg = "Task edited!";
-                callback(data);
+                callback(data, successMsg);
             }).error(function(data) {
                 console.log('Error: ' + data);
             });

@@ -1,15 +1,15 @@
 <div class="list" ng-controller='TasksController'>
 
-  <div>{{success.msg}}</div>
+  
   
   <a ng-href="#/tasks/add" class="button">Add Task</a>
 
   <label class="user_input_container"><u>Sort by:</u>
-      <select ng-model="sort_by">
-          <option value="name" ng-click="sort()">name</option>
-          <option value="assignedUserName" ng-click="sort()">assignedUserName</option>
-          <option value="dateCreated" ng-click="sort()">dateCreated</option>
-          <option value="deadline" ng-click="sort()">deadline</option>
+      <select ng-model="sort_by" ng-change="sort()">
+          <option value="name" >name</option>
+          <option value="assignedUserName" >assignedUserName</option>
+          <option value="dateCreated" >dateCreated</option>
+          <option value="deadline" >deadline</option>
       </select>
 
       <label>

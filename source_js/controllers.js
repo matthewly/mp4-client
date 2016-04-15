@@ -77,7 +77,7 @@ mp4Controllers.controller('UsersController', ['$scope', '$http', 'Users', 'User'
     User.delete(function(data, successMsg) {
       console.log(successMsg);
       AlertService.setSuccess({ show: true, msg: 'User has been deleted successfully.' });
-      $window.location.href = '/#/users/';
+    
     }, user);
   };
 
@@ -113,8 +113,7 @@ mp4Controllers.controller('UserEditController', ['$scope', '$http', 'User', 'Ale
     
     User.edit(function(data, successMsg) {
       console.log(successMsg);
-      AlertService.setSuccess({ show: true, msg: 'User has been updated successfully.' });
-      $window.location.href = '/#/users/'+$scope.User._id;
+      $scope.status = successMsg;
     }, $scope.User);
 
     
@@ -301,6 +300,11 @@ mp4Controllers.controller('TaskEditController', ['$scope', '$http', 'Task', 'Use
     $scope.users = data.data;
   });
 
+  if (AlertService.hasAlert()) {
+    $scope.success = AlertService.getSuccess();
+    AlertService.reset();
+  }
+
   $scope.submit = function() {
     console.log('$scope.Task.assignedUser'+$scope.Task.assignedUser);
 
@@ -318,11 +322,13 @@ mp4Controllers.controller('TaskEditController', ['$scope', '$http', 'Task', 'Use
 
       Task.editComplete(function(data, successMsg) {
         console.log('Task edit complete!');
+        $scope.status = successMsg;
+        AlertService.setSuccess({ show: true, msg: 'Task has been updated successfully.' });
         /* Add to User's pendingTasks */
         User.editComplete(function(data) {
           console.log('User edit complete!');
           
-          $window.location.href = './partials/tasks.html/'+$scope.Task._id;
+          
         }, userObj);
         AlertService.setSuccess({ show: true, msg: 'Task has been updated successfully.' });
       }, $scope.Task);
@@ -331,14 +337,17 @@ mp4Controllers.controller('TaskEditController', ['$scope', '$http', 'Task', 'Use
   } else {
     Task.editComplete(function(data, successMsg) {
         console.log('Task edit complete!');
-        
+        $scope.status = successMsg;
+
         AlertService.setSuccess({ show: true, msg: 'Task has been updated successfully.' });
-        $window.location.href = './partials/tasks.html/'+$scope.Task._id;
+       
 
       }, $scope.Task);
     
   }
   }
+
+
 }]);
 
 mp4Controllers.controller('SettingsController', ['$scope' , '$window' , function($scope, $window) {
