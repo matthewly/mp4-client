@@ -29,7 +29,7 @@ mp4Controllers.controller('UserController', ['$scope', '$http', 'User', 'Tasks',
   
          User.editComplete(function(data) {
             AlertService.setSuccess({ show: true, msg: 'Task has been updated successfully.' });
-            $window.location.href = '/#/tasks/'+taskObj._id;
+            
          }, $scope.user);
       }, taskObj);
     }, taskID);
@@ -135,7 +135,7 @@ mp4Controllers.controller('TaskController', ['$scope', '$http', 'Task', 'AlertSe
   
   
             AlertService.setSuccess({ show: true, msg: 'Task has been updated successfully.' });
-            $window.location.href = '/#/tasks/'+$scope.task._id;
+     
 
       }, $scope.task);
   };
@@ -262,7 +262,7 @@ mp4Controllers.controller('TasksController', ['$scope', '$http', 'Tasks', 'Task'
 
     Task.delete(function(data) {
       AlertService.setSuccess({ show: true, msg: 'Task has been deleted successfully.' });
-      $window.location.href = '/#/tasks/';
+  
     }, task);
   };
 
