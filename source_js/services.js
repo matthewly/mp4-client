@@ -65,7 +65,16 @@ mp4Services.factory('User', function($http, $window, $routeParams){
             }).error(function(data) {
                 console.log('Error: ' + data);
             });
-        }
+        },
+
+        getID : function(callback, name) {
+            var baseUrl = $window.sessionStorage.baseurl;
+            return $http.get(baseUrl+'/api/users?where='+name).success(function(data) {
+                callback(data);
+            }).error(function(data) {
+                console.log('Error: ' + data);
+            });
+        },
     }
 });
 

@@ -75,7 +75,9 @@ mp4Controllers.controller('UsersController', ['$scope', '$http', 'Users', 'User'
     }, assignedUser);
 
     User.delete(function(data, successMsg) {
+      $scope.status = successMsg;
       console.log(successMsg);
+      
       AlertService.setSuccess({ show: true, msg: 'User has been deleted successfully.' });
     
     }, user);
@@ -243,27 +245,52 @@ mp4Controllers.controller('TasksController', ['$scope', '$http', 'Tasks', 'Task'
   /* Delete Task */
   $scope.deleteTask = function(task) {
     
-    User.getName(function(data) {
-       var userObj = data.data;
+    if (task.assignedUser != "unassigned" && task.assignedUser != "") {
+        User.getName(function(data) {
+           var userObj = data.data;
+    
+           var task_index = userObj.pendingTasks.indexOf(task._id);
+    
+           if (task_index > -1) {
+               userObj.pendingTasks.splice(task_index, 1);
+           }
+    
+           console.log(JSON.stringify(userObj));
+    
+           User.editComplete(function(data) {
+                console.log('User pendingTasks updated!');
+           }, userObj);
+    
+        }, task.assignedUser);
 
-       var task_index = userObj.pendingTasks.indexOf(task._id);
 
-       if (task_index > -1) {
-           userObj.pendingTasks.splice(task_index, 1);
-       }
+        Task.delete(function(data, successMsg) {
+          $scope.status = successMsg;
+    
+          AlertService.setSuccess({ show: true, msg: 'Task has been deleted successfully.' });
+      
+        }, task);
 
-       console.log(JSON.stringify(userObj));
+    } else {
 
-       User.editComplete(function(data) {
-            console.log('User pendingTasks updated!');
-       }, userObj);
-
-    }, task.assignedUser);
-
-    Task.delete(function(data) {
-      AlertService.setSuccess({ show: true, msg: 'Task has been deleted successfully.' });
+      var username = "{'name': '"+task.assignedUserName+"'}";
+      console.log(username);
+       
+ // 
+        
+      //   //console.log(' ' + $scope.Task.assignedUser);
+        Task.delete(function(data, successMsg) {
   
-    }, task);
+            $scope.status = successMsg;
+    
+            AlertService.setSuccess({ show: true, msg: 'Task has been updated successfully.' });
+           
+    
+         }, task);
+  
+ 
+
+    }
   };
 
   if (AlertService.hasAlert()) {
@@ -308,9 +335,9 @@ mp4Controllers.controller('TaskEditController', ['$scope', '$http', 'Task', 'Use
   $scope.submit = function() {
     console.log('$scope.Task.assignedUser'+$scope.Task.assignedUser);
 
-    if ($scope.Task.assignedUser != "unassigned") {
+    if ($scope.Task.assignedUser != "unassigned" && $scope.Task.assignedUser != "") {
     User.getName(function(data) {
-       $scope.Task.assignedUserName = data.data.name;
+       $scope.Task.assignedUser = data.data._id;
        console.log('$scope.Task = ' + JSON.stringify($scope.Task));
 
        var userObj = data.data;
@@ -335,16 +362,28 @@ mp4Controllers.controller('TaskEditController', ['$scope', '$http', 'Task', 'Use
     }, $scope.Task.assignedUser);
 
   } else {
-    Task.editComplete(function(data, successMsg) {
-        console.log('Task edit complete!');
-        $scope.status = successMsg;
-
-        AlertService.setSuccess({ show: true, msg: 'Task has been updated successfully.' });
-       
-
-      }, $scope.Task);
     
-  }
+    var username = "{'name': '"+$scope.Task.assignedUserName+"'}";
+    console.log(username);
+    User.getID(function(data) {
+      $scope.Task.assignedUser = data.data[0]._id;
+      
+      //console.log(' ' + $scope.Task.assignedUser);
+      Task.editComplete(function(data, successMsg) {
+          console.log(JSON.stringify(data));
+          $scope.status = successMsg;
+  
+          AlertService.setSuccess({ show: true, msg: 'Task has been updated successfully.' });
+         
+  
+      }, $scope.Task);
+
+    }, username);
+
+
+    
+    
+   }
   }
 
 
