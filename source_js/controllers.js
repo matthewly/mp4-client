@@ -290,7 +290,7 @@ mp4Controllers.controller('TaskAddController', ['$scope', '$http', 'Task', 'User
   }
 }]);
 
-mp4Controllers.controller('TaskEditController', ['$scope', '$http', 'Task', 'Users', 'User', 'AlertService', '$window', '$routeParams', function($scope, $http, Task, Users, User, AlertService, $window, $routeParams) {
+mp4Controllers.controller('TaskEditController', ['$scope', '$http', 'Task', 'Users', 'User', 'AlertService', '$window', '$location', '$routeParams', function($scope, $http, Task, Users, User, AlertService, $window, $location, $routeParams) {
   $scope.status = "";
 
   Task.get(function(data) {
@@ -302,6 +302,9 @@ mp4Controllers.controller('TaskEditController', ['$scope', '$http', 'Task', 'Use
   });
 
   $scope.submit = function() {
+    console.log('$scope.Task.assignedUser'+$scope.Task.assignedUser);
+
+    if ($scope.Task.assignedUser != "unassigned") {
     User.getName(function(data) {
        $scope.Task.assignedUserName = data.data.name;
        console.log('$scope.Task = ' + JSON.stringify($scope.Task));
@@ -318,13 +321,23 @@ mp4Controllers.controller('TaskEditController', ['$scope', '$http', 'Task', 'Use
         /* Add to User's pendingTasks */
         User.editComplete(function(data) {
           console.log('User edit complete!');
-          AlertService.setSuccess({ show: true, msg: 'Task has been updated successfully.' });
+          
           $window.location.href = '/#/tasks/'+$scope.Task._id;
         }, userObj);
-       
+        AlertService.setSuccess({ show: true, msg: 'Task has been updated successfully.' });
       }, $scope.Task);
     }, $scope.Task.assignedUser);
+
+  } else {
+    Task.editComplete(function(data, successMsg) {
+        console.log('Task edit complete!');
+        
+        AlertService.setSuccess({ show: true, msg: 'Task has been updated successfully.' });
+        $window.location.href = '/#/tasks/'+$scope.Task._id;
+
+      }, $scope.Task);
     
+  }
   }
 }]);
 
